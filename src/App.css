@@ -1,38 +1,73 @@
-.App {
-  text-align: center;
+.header {
+    padding: 20px 0;
+    background: #f8f8f8;
+    box-shadow: 5px 3px 8px #ccc;
+    z-index: 1;
+    position: fixed;
+    width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.site-logo img {
+    width: 150px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.left-navbar {
+    background: #f8f8f8;
+    width: 240px;
+    height: 100%;
+    position: fixed;
+    margin: 75px 0 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.left-navbar .nav-link {
+    background: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 20px;
+    color: #000;
 }
 
-.App-link {
-  color: #61dafb;
+.nav-link.active {
+    background: #ddd;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.right-content {
+    padding: 75px 0 0 240px;
+}
+
+.inner-wrapper {
+    padding: 30px 40px 40px;
+}
+
+.form-control.textarea {
+    min-height: 100px;
+}
+
+.form-table-content {
+    margin-top: 50px;
+}
+
+.form-table-content table {
+    width: 100%;
+}
+
+.form-table-content th {
+    background: #f2f2f2f2;
+    border: 1px solid #b6b7b7;
+    padding: 10px 20px;
+}
+
+.form-table-content tbody td {
+    border: 1px solid #b6b7b7;
+    padding: 15px 20px;
+}
+
+.form-table-content .avatar-img {
+    width: 25px;
+    border-radius: 50%;
+}
+
+.form-table-content tbody td i.fas {
+    margin-right: 10px;
 }
