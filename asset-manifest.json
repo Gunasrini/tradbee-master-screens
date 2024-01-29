@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/tradbee-master-screens/static/css/main.d5cbde6b.css",
+    "main.js": "/tradbee-master-screens/static/js/main.7a5e6e63.js",
+    "static/js/787.ad92f3ef.chunk.js": "/tradbee-master-screens/static/js/787.ad92f3ef.chunk.js",
+    "static/media/logo.png": "/tradbee-master-screens/static/media/logo.54fbc67ea9a6b95b5037.png",
+    "index.html": "/tradbee-master-screens/index.html",
+    "main.d5cbde6b.css.map": "/tradbee-master-screens/static/css/main.d5cbde6b.css.map",
+    "main.7a5e6e63.js.map": "/tradbee-master-screens/static/js/main.7a5e6e63.js.map",
+    "787.ad92f3ef.chunk.js.map": "/tradbee-master-screens/static/js/787.ad92f3ef.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d5cbde6b.css",
+    "static/js/main.7a5e6e63.js"
+  ]
+}
