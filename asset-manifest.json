@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/tradbee-master-screens/static/css/main.d5cbde6b.css",
-    "main.js": "/tradbee-master-screens/static/js/main.0469193d.js",
+    "main.js": "/tradbee-master-screens/static/js/main.9e39120a.js",
     "static/js/787.ad92f3ef.chunk.js": "/tradbee-master-screens/static/js/787.ad92f3ef.chunk.js",
     "static/media/logo.png": "/tradbee-master-screens/static/media/logo.54fbc67ea9a6b95b5037.png",
     "index.html": "/tradbee-master-screens/index.html",
     "main.d5cbde6b.css.map": "/tradbee-master-screens/static/css/main.d5cbde6b.css.map",
-    "main.0469193d.js.map": "/tradbee-master-screens/static/js/main.0469193d.js.map",
+    "main.9e39120a.js.map": "/tradbee-master-screens/static/js/main.9e39120a.js.map",
     "787.ad92f3ef.chunk.js.map": "/tradbee-master-screens/static/js/787.ad92f3ef.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d5cbde6b.css",
-    "static/js/main.0469193d.js"
+    "static/js/main.9e39120a.js"
   ]
 }
