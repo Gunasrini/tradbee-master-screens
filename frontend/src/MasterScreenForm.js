@@ -20,7 +20,7 @@ export default function MasterScreenForm() {
                 <div className='right-content'>
                     <div className='inner-wrapper'>
                         <Routes>
-                            <Route path='/' element={<EmployeeType />} />
+                            <Route path='' element={<EmployeeType />} />
                             <Route path="/company-type" element={<CompanyType />} />
                             <Route path="/business-nature" element={<BusinessNature />} />
                             <Route path="/industry-type" element={<IndustryType />} />
