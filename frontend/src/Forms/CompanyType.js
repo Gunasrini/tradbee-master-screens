@@ -17,16 +17,25 @@ export default function EmployeeType() {
             headers: {
                 'Content-Type': 'application/json'
             }
+
         })
-            .then(() => alert("Company Type Store Successfully!..."))
+            .then(() => {
+                alert("Company type added successfully!...")
+                showData();
+                setCompType('');
+            })
             .catch(err => console.log(err));
     }
 
-    useEffect(() => {
+    function showData() {
         fetch('http://localhost:8081/api/companytype')
             .then(res => res.json())
             .then(data => setData(data))
             .catch((err) => console.log(err));
+    }
+
+    useEffect(() => {
+        showData();
     }, []);
 
     return (
@@ -40,7 +49,7 @@ export default function EmployeeType() {
                         <input className='form-control' placeholder='Company Type' value={cType} onChange={(e) => setCompType(e.target.value)} />
                     </div>
                     <div>
-                        <button type="submit" className="btn btn-primary">Add</button>
+                        <button type="submit" disabled={cType.length === 0} className="btn btn-primary">Add</button>
                     </div>
                 </Form>
             </Col>
@@ -60,9 +69,9 @@ export default function EmployeeType() {
                                     <td>{item.cType}</td>
                                     <td>
                                         <div className="icons">
-                                            <i className="fas fa-eye"></i>
-                                            <i className="fas fa-pencil-alt"></i>
-                                            <i className="fas fa-trash"></i>
+                                            <span><i className="fas fa-eye"></i></span>
+                                            <span><i className="fas fa-pencil-alt"></i></span>
+                                            <span><i className="fas fa-trash"></i></span>
                                         </div>
                                     </td>
                                 </tr>

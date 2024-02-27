@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Form } from 'reactstrap'
 
 export default function BusinessNature() {
-    const [bn, steBusinessNature] = useState("");
+    const [bn, setBusinessNature] = useState("");
 
     const [data, setData] = useState([]);
 
@@ -17,16 +17,25 @@ export default function BusinessNature() {
             headers: {
                 'Content-Type': 'application/json'
             }
+
         })
-            .then(() => alert("Business Nature Store Successfully!..."))
+            .then(() => {
+                alert("Business nature added successfully!...")
+                showData();
+                setBusinessNature('');
+            })
             .catch(err => console.log(err));
     }
 
-    useEffect(() => {
+    function showData() {
         fetch('http://localhost:8081/api/businessnature')
             .then(res => res.json())
             .then(data => setData(data))
             .catch((err) => console.log(err));
+    }
+
+    useEffect(() => {
+        showData();
     }, []);
 
     return (
@@ -37,10 +46,10 @@ export default function BusinessNature() {
                 </div>
                 <Form onSubmit={handleSubmit}>
                     <div className='mb-4'>
-                        <input className='form-control' placeholder='Business Nature' value={bn} onChange={(e) => steBusinessNature(e.target.value)} />
+                        <input className='form-control' placeholder='Business Nature' value={bn} onChange={(e) => setBusinessNature(e.target.value)} />
                     </div>
                     <div>
-                        <button type="submit" className="btn btn-primary">Add</button>
+                        <button type="submit" disabled={bn.length === 0} className="btn btn-primary">Add</button>
                     </div>
                 </Form>
             </Col>
@@ -60,9 +69,9 @@ export default function BusinessNature() {
                                     <td>{item.bn}</td>
                                     <td>
                                         <div className="icons">
-                                            <i className="fas fa-eye"></i>
-                                            <i className="fas fa-pencil-alt"></i>
-                                            <i className="fas fa-trash"></i>
+                                            <span><i className="fas fa-eye"></i></span>
+                                            <span><i className="fas fa-pencil-alt"></i></span>
+                                            <span><i className="fas fa-trash"></i></span>
                                         </div>
                                     </td>
                                 </tr>

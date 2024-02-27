@@ -1,22 +1,55 @@
-import React from 'react'
-import { Col, Form, Input } from 'reactstrap'
+import React, { useEffect, useState } from 'react'
+import { Col, Form } from 'reactstrap'
 
 export default function DocumentType() {
+    const [doctype, setDocumentType] = useState("");
+
+    const [data, setData] = useState([]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const formData = { doctype };
+
+        fetch('http://localhost:8081/api/doctype', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        })
+            .then(() => {
+                alert("Document type added successfully!...")
+                showData();
+                setDocumentType('');
+            })
+            .catch(err => console.log(err));
+    }
+
+    function showData() {
+        fetch('http://localhost:8081/api/doctype')
+            .then(res => res.json())
+            .then(data => setData(data))
+            .catch((err) => console.log(err));
+    }
+
+    useEffect(() => {
+        showData();
+    }, []);
+
     return (
         <>
             <Col lg={4}>
                 <div className='mb-4'>
                     <h4>Document Type</h4>
                 </div>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <div className='mb-4'>
-                        <Input type='hidden' placeholder='Document Type Id' />
-                    </div>
-                    <div className='mb-4'>
-                        <input className='form-control' placeholder='Document Type' />
+                        <input className='form-control' placeholder='Document Type' value={doctype} onChange={(e) => setDocumentType(e.target.value)} />
                     </div>
                     <div>
-                        <button type="button" className="btn btn-primary">Add</button>
+                        <button type="submit" disabled={doctype.length === 0} className="btn btn-primary">Add</button>
                     </div>
                 </Form>
             </Col>
@@ -25,44 +58,25 @@ export default function DocumentType() {
                     <thead>
                         <tr>
                             <th>Type</th>
-                            <th>Description</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Type 1</td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                            <td>
-                                <div className="icons">
-                                    <i className="fas fa-eye"></i>
-                                    <i className="fas fa-pencil-alt"></i>
-                                    <i className="fas fa-trash"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Type 2</td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                            <td>
-                                <div className="icons">
-                                    <i className="fas fa-eye"></i>
-                                    <i className="fas fa-pencil-alt"></i>
-                                    <i className="fas fa-trash"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Type 3</td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                            <td>
-                                <div className="icons">
-                                    <i className="fas fa-eye"></i>
-                                    <i className="fas fa-pencil-alt"></i>
-                                    <i className="fas fa-trash"></i>
-                                </div>
-                            </td>
-                        </tr>
+
+                        {
+                            data.map(item => (
+                                <tr key={item.docid}>
+                                    <td>{item.doctype}</td>
+                                    <td>
+                                        <div className="icons">
+                                            <span><i className="fas fa-eye"></i></span>
+                                            <span><i className="fas fa-pencil-alt"></i></span>
+                                            <span><i className="fas fa-trash"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
             </div>
