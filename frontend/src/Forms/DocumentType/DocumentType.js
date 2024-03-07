@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import { Col, Form } from 'reactstrap'
+import axios from "axios";
 
-export default function Bank() {
-    const [bname, setBankName] = useState("");
+export default function DocumentType() {
+    const [doctype, setDocumentType] = useState("");
 
     const [data, setData] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const formData = { bname };
+        const formData = { doctype };
 
-        fetch('http://localhost:8081/api/bank', {
+        fetch('http://localhost:8081/api/doctype', {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: {
@@ -20,15 +22,15 @@ export default function Bank() {
 
         })
             .then(() => {
-                alert("Bank Name added successfully!...")
+                alert("Document type added successfully!...")
                 showData();
-                setBankName('');
+                setDocumentType('');
             })
             .catch(err => console.log(err));
     }
 
     function showData() {
-        fetch('http://localhost:8081/api/bank')
+        fetch('http://localhost:8081/api/doctype')
             .then(res => res.json())
             .then(data => setData(data))
             .catch((err) => console.log(err));
@@ -38,18 +40,29 @@ export default function Bank() {
         showData();
     }, []);
 
+    const handleDelete = (docid) => {
+        if (window.confirm("Do you really want to delete this item?!!")) {
+            axios.delete('http://localhost:8081/api/deletetmdoctype/' + docid)
+                .then(() => {
+                    alert("Item Deleted Successfully..!!")
+                    showData();
+                })
+                .catch((err) => console.log(err));
+        }
+    }
+
     return (
         <>
             <Col lg={4}>
                 <div className='mb-4'>
-                    <h4>Bank Information</h4>
+                    <h4>Document Type</h4>
                 </div>
                 <Form onSubmit={handleSubmit}>
                     <div className='mb-4'>
-                        <input className='form-control' placeholder='Bank Name' value={bname} onChange={(e) => setBankName(e.target.value)} />
+                        <input className='form-control' placeholder='Document Type' value={doctype} onChange={(e) => setDocumentType(e.target.value)} />
                     </div>
                     <div>
-                        <button type="submit" disabled={bname.length === 0} className="btn btn-primary">Add</button>
+                        <button type="submit" disabled={doctype.length === 0} className="btn btn-primary">Add</button>
                     </div>
                 </Form>
             </Col>
@@ -65,13 +78,12 @@ export default function Bank() {
 
                         {
                             data.map(item => (
-                                <tr key={item.bid}>
-                                    <td>{item.bname}</td>
+                                <tr key={item.docid}>
+                                    <td>{item.doctype}</td>
                                     <td>
-                                        <div className="icons">
-                                            <span><i className="fas fa-eye"></i></span>
-                                            <span><i className="fas fa-pencil-alt"></i></span>
-                                            <span><i className="fas fa-trash"></i></span>
+                                        <div className='icons'>
+                                            <Link to={`/document-type/update/${item.docid}`}><span><i className="fas fa-pencil-alt"></i></span></Link>
+                                            <span className='text-primary ms-2' onClick={() => handleDelete(item.docid)}><i className="fas fa-trash"></i></span>
                                         </div>
                                     </td>
                                 </tr>

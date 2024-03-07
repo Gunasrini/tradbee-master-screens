@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import { Col, Form } from 'reactstrap'
+import axios from "axios";
 
 export default function Bank() {
     const [tdatac, setDataConsent] = useState("");
@@ -38,6 +40,17 @@ export default function Bank() {
         showData();
     }, []);
 
+    const handleDelete = (tdatacid) => {
+        if (window.confirm("Do you really want to delete this item?!!")) {
+            axios.delete('http://localhost:8081/api/deletetmdataconsent/' + tdatacid)
+                .then(() => {
+                    alert("Item Deleted Successfully..!!")
+                    showData();
+                })
+                .catch((err) => console.log(err));
+        }
+    }
+
     return (
         <>
             <Col lg={4}>
@@ -68,10 +81,9 @@ export default function Bank() {
                                 <tr key={item.tdatacid}>
                                     <td>{item.tdatac}</td>
                                     <td>
-                                        <div className="icons">
-                                            <span><i className="fas fa-eye"></i></span>
-                                            <span><i className="fas fa-pencil-alt"></i></span>
-                                            <span><i className="fas fa-trash"></i></span>
+                                        <div className='icons'>
+                                            <Link to={`/data-consent/update/${item.tdatacid}`}><span><i className="fas fa-pencil-alt"></i></span></Link>
+                                            <span className='text-primary ms-2' onClick={() => handleDelete(item.tdatacid)}><i className="fas fa-trash"></i></span>
                                         </div>
                                     </td>
                                 </tr>

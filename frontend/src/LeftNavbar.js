@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 export default function LeftNavbar() {
     return (
@@ -24,6 +24,9 @@ export default function LeftNavbar() {
                 </li>
                 <li className="nav-item">
                     <NavLink className="nav-link" to="/bank">Bank</NavLink>
+                </li>
+                <li className="nav-item">
+                    <NavLink className="nav-link" to="/relation-type">Relation Type</NavLink>
                 </li>
                 <li className="nav-item">
                     <NavLink className="nav-link" to="/data-consent">Data Consent</NavLink>

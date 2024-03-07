@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import { Col, Form } from 'reactstrap'
+import axios from "axios";
 
 export default function IndustryType() {
     const [it, setIndustryType] = useState("");
@@ -38,6 +40,17 @@ export default function IndustryType() {
         showData();
     }, []);
 
+    const handleDelete = (itid) => {
+        if (window.confirm("Do you really want to delete this item?!!")) {
+            axios.delete('http://localhost:8081/api/deletetmindustrytype/' + itid)
+                .then(() => {
+                    alert("Item Deleted Successfully..!!")
+                    showData();
+                })
+                .catch((err) => console.log(err));
+        }
+    }
+
     return (
         <>
             <Col lg={4}>
@@ -68,10 +81,9 @@ export default function IndustryType() {
                                 <tr key={item.itid}>
                                     <td>{item.it}</td>
                                     <td>
-                                        <div className="icons">
-                                            <span><i className="fas fa-eye"></i></span>
-                                            <span><i className="fas fa-pencil-alt"></i></span>
-                                            <span><i className="fas fa-trash"></i></span>
+                                        <div className='icons'>
+                                            <Link to={`/industry-type/update/${item.itid}`}><span><i className="fas fa-pencil-alt"></i></span></Link>
+                                            <span className='text-primary ms-2' onClick={() => handleDelete(item.itid)}><i className="fas fa-trash"></i></span>
                                         </div>
                                     </td>
                                 </tr>

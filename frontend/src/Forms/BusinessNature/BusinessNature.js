@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Form } from 'reactstrap'
+import axios from "axios";
+import { Link } from 'react-router-dom';
 
-export default function CollateralType() {
-    const [ct, setCollateralType] = useState("");
+export default function BusinessNature() {
+    const [bn, setBusinessNature] = useState("");
 
     const [data, setData] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const formData = { ct };
+        const formData = { bn };
 
-        fetch('http://localhost:8081/api/collateraltype', {
+        fetch('http://localhost:8081/api/businessnature', {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: {
@@ -20,15 +22,15 @@ export default function CollateralType() {
 
         })
             .then(() => {
-                alert("Collateral type added successfully!...")
+                alert("Business nature added successfully!...")
                 showData();
-                setCollateralType('');
+                setBusinessNature('');
             })
             .catch(err => console.log(err));
     }
 
     function showData() {
-        fetch('http://localhost:8081/api/collateraltype')
+        fetch('http://localhost:8081/api/businessnature')
             .then(res => res.json())
             .then(data => setData(data))
             .catch((err) => console.log(err));
@@ -38,18 +40,29 @@ export default function CollateralType() {
         showData();
     }, []);
 
+    const handleDelete = (bnid) => {
+        if (window.confirm("Do you really want to delete this item?!!")) {
+            axios.delete('http://localhost:8081/api/deletetmbusinessnature/' + bnid)
+                .then(() => {
+                    alert("Item Deleted Successfully..!!")
+                    showData();
+                })
+                .catch((err) => console.log(err));
+        }
+    }
+
     return (
         <>
             <Col lg={4}>
                 <div className='mb-4'>
-                    <h4>Collateral Type</h4>
+                    <h4>Business Nature</h4>
                 </div>
                 <Form onSubmit={handleSubmit}>
                     <div className='mb-4'>
-                        <input className='form-control' placeholder='Collateral Type' value={ct} onChange={(e) => setCollateralType(e.target.value)} />
+                        <input className='form-control' placeholder='Business Nature' value={bn} onChange={(e) => setBusinessNature(e.target.value)} />
                     </div>
                     <div>
-                        <button type="submit" disabled={ct.length === 0} className="btn btn-primary">Add</button>
+                        <button type="submit" disabled={bn.length === 0} className="btn btn-primary">Add</button>
                     </div>
                 </Form>
             </Col>
@@ -65,13 +78,12 @@ export default function CollateralType() {
 
                         {
                             data.map(item => (
-                                <tr key={item.ctid}>
-                                    <td>{item.ct}</td>
+                                <tr key={item.bnid}>
+                                    <td>{item.bn}</td>
                                     <td>
-                                        <div className="icons">
-                                            <span><i className="fas fa-eye"></i></span>
-                                            <span><i className="fas fa-pencil-alt"></i></span>
-                                            <span><i className="fas fa-trash"></i></span>
+                                        <div className='icons'>
+                                            <Link to={`/business-nature/update/${item.bnid}`}><span><i className="fas fa-pencil-alt"></i></span></Link>
+                                            <span className='text-primary ms-2' onClick={() => handleDelete(item.bnid)}><i className="fas fa-trash"></i></span>
                                         </div>
                                     </td>
                                 </tr>
