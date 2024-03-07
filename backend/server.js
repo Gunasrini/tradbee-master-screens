@@ -78,6 +78,91 @@ app.get('/api/tmemptype', (req, res) => {
     });
 });
 
+// Read endpoint to retrieve data from tmemptype table
+app.get('/api/tmemptype/:emptypeid', (req, res) => {
+    const emptypeid = req.params.emptypeid;
+    // Fetch data from the database
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.error('Error connecting to database:', err);
+            res.status(500).json({ error: 'Internal server error' });
+            return;
+        }
+
+        // Use the connection
+        connection.query('SELECT * from  tmemptype WHERE emptypeid = ?', [emptypeid], (error, results, fields) => {
+            // When done with the connection, release it
+            connection.release();
+
+            if (error) {
+                console.error('Error retrieving data from tmemptype table:', error);
+                res.status(500).json({ error: 'Internal server error' });
+                return;
+            }
+
+            res.status(200).json(results);
+        });
+    });
+});
+
+// API endpoint to update data in emp type table
+app.put('/api/updatetmemptype/:emptypeid', (req, res) => {
+    const emptypeid = req.params.emptypeid;
+    const { emptype, emptypedesc } = req.body;
+
+    // Update data in the database
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.error('Error connecting to database:', err);
+            res.status(500).json({ error: 'Internal server error' });
+            return;
+        }
+
+        // Use the connection
+        connection.query('UPDATE tmemptype SET emptype = ?, emptypedesc = ? WHERE emptypeid = ?', [emptype, emptypedesc, emptypeid], (error, results, fields) => {
+            // When done with the connection, release it
+            connection.release();
+
+            if (error) {
+                console.error('Error updating data in tmemptype table:', error);
+                res.status(500).json({ error: 'Internal server error' });
+                return;
+            }
+
+            res.status(200).json({ message: 'Data updated successfully' });
+        });
+    });
+});
+
+// API endpoint to delete data from emp type table
+app.delete('/api/deletetmemptype/:emptypeid', (req, res) => {
+    const emptypeid = req.params.emptypeid;
+
+    // Delete data from the database
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.error('Error connecting to database:', err);
+            res.status(500).json({ error: 'Internal server error' });
+            return;
+        }
+
+        // Use the connection
+        connection.query('DELETE FROM tmemptype WHERE emptypeid = ?', [emptypeid], (error, results, fields) => {
+            // When done with the connection, release it
+            connection.release();
+
+            if (error) {
+                console.error('Error deleting data from tmemptype table:', error);
+                res.status(500).json({ error: 'Internal server error' });
+                return;
+            }
+
+            res.status(200).json({ message: 'Data deleted successfully' });
+        });
+    });
+});
+
+
 // API endpoint to store company type data
 app.post('/api/companytype', (req, res) => {
     const { cType } = req.body;

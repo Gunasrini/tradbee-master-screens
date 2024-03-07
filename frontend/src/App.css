@@ -71,3 +71,7 @@
 .form-table-content tbody td i.fas {
     margin-right: 10px;
 }
+
+.icons span {
+    cursor: pointer;
+}

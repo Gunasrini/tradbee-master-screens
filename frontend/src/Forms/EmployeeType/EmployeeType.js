@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom';
 import { Col, Form } from 'reactstrap'
+import axios from "axios";
 
 export default function EmployeeType() {
     const [empType, setEmpType] = useState("");
@@ -21,7 +23,7 @@ export default function EmployeeType() {
 
         })
             .then(() => {
-                alert("Employee type added successfully!...")
+                alert("Data added successfully!...")
                 showData();
                 setEmpType('');
                 setEmpTypeDesc('');
@@ -39,6 +41,17 @@ export default function EmployeeType() {
     useEffect(() => {
         showData();
     }, []);
+
+    const handleDelete = (emptypeid) => {
+        if (confirm("Do you really want to delete this item?!!")) {
+            axios.delete('http://localhost:8081/api/deletetmemptype/' + emptypeid)
+                .then(() => {
+                    alert("Item Deleted Successfully..!!")
+                    showData();
+                })
+                .catch((err) => console.log(err));
+        }
+    }
 
     return (
         <>
@@ -75,10 +88,9 @@ export default function EmployeeType() {
                                     <td>{item.empType}</td>
                                     <td>{item.empTypeDesc}</td>
                                     <td>
-                                        <div className="icons">
-                                            <span><i className="fas fa-eye"></i></span>
-                                            <span><i className="fas fa-pencil-alt"></i></span>
-                                            <span><i className="fas fa-trash"></i></span>
+                                        <div className='icons'>
+                                            <Link to={`/employee-type/update/${item.emptypeid}`}><span><i className="fas fa-pencil-alt"></i></span></Link>
+                                            <span className='text-primary ms-2' onClick={() => handleDelete(item.emptypeid)}><i className="fas fa-trash"></i></span>
                                         </div>
                                     </td>
                                 </tr>
